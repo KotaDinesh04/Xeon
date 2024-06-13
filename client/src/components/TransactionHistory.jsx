@@ -1,110 +1,93 @@
-import { useState } from 'react'; 
-import PropTypes from 'prop-types';
-//import './TransactionHistory.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
 
+const TransactionHistory = ({ accessToken, user }) => {
+  const [accounts, setAccounts] = useState([]);
+  const [transactionAdded, setTransactionAdded] = useState([]);
+  const [data, setData] = useState({});
 
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/transdb", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        console.log("Fetched Data:", res.data);
+        setData(res.data);
+        setAccounts(res.data.accounts);
+        setTransactionAdded(res.data.added);
+      } catch (error) {
+        console.error("Error fetching transaction:", error);
+      }
+    };
 
-const sampleAccounts = [
-  {
-    appwriteItemId: 'account123',
-    data: {
-      name: 'Main Account',
-      officialName: 'Main Checking Account',
-      mask: '1234',
-      currentBalance: 5000.00,
-      transactions: [
-        { id: 1, date: '2024-01-01', description: 'Grocery Store', amount: -50.25 },
-        { id: 2, date: '2024-01-02', description: 'Gas Station', amount: -40.00 },
-        { id: 3, date: '2024-01-03', description: 'Electricity Bill', amount: -75.00 },
-        
-      ],
-    },
-  },
+    fetchTransaction();
+  }, [accessToken]);
 
-];
-
-const formatAmount = amount => `$${amount.toFixed(2)}`;
-
-const TransactionHistory = ({ searchParams }) => {
-  const { id, page } = searchParams || {};
-  const [currentPage, setCurrentPage] = useState(Number(page) || 1);
-  const account = sampleAccounts.find(acc => acc.appwriteItemId === id) || sampleAccounts[0];
-
-  const rowsPerPage = 10;
-  const totalPages = account ? Math.ceil(account.data.transactions.length / rowsPerPage) : 1;
-
-  const indexOfLastTransaction = currentPage * rowsPerPage;
-  const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
-
-  const currentTransactions = account ? account.data.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction) : [];
+  console.log("aldj", accessToken);
 
   return (
-    <div className="transactions">
-      <div className="transactions-header">
-        <div className="header-box">
-          <h1>Transaction History</h1>
-          <p>See your bank details and transactions.</p>
-        </div>
-      </div>
-
-      <div className="space-y-6">
-        <div className="transactions-account">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-18 font-bold text-white">{account?.data.name}</h2>
-            <p className="text-14 text-blue-25">
-              {account?.data.officialName}
-            </p>
-            <p className="text-14 font-semibold tracking-[1.1px] text-white">
-              ●●●● ●●●● ●●●● {account?.data.mask}
-            </p>
-          </div>
-          
-          <div className='transactions-account-balance'>
-            <p className="text-14">Current balance</p>
-            <p className="text-24 text-center font-bold">{formatAmount(account?.data.currentBalance)}</p>
-          </div>
-        </div>
-
-        <section className="flex w-full flex-col gap-6">
-          <table className="transactions-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
+    <div className="container-fluid">
+      <h2 className="recent-transactions-heading recent-transactions-label">
+        Transactions
+      </h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover mt-3 w-100">
+          <thead>
+            <tr>
+              <th scope="col" className="text-nowrap">Transaction</th>
+              <th scope="col" className="text-nowrap">Amount</th>
+              <th scope="col" className="text-nowrap">Date</th>
+              <th scope="col" className="text-nowrap">Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactionAdded.map((transaction) => (
+              <tr key={transaction.transaction_id}>
+                <td className="text-nowrap">{transaction.name}</td>
+                <td className={`text-nowrap ${transaction.amount >= 0 ? "text-success" : "text-danger"}`}>
+                  ${Math.abs(transaction.amount).toFixed(2)}
+                </td>
+                <td className="text-nowrap">{transaction.authorized_date}</td>
+                <td className="text-nowrap">
+                  {Array.isArray(transaction.category) ? (
+                    transaction.category.map((category, index) => (
+                      <span
+                        key={index}
+                        className={`badge ${getCategoryBadgeClass(category)} border border-primary text-primary me-1 px-2 py-1`}
+                      >
+                        {category}
+                      </span>
+                    ))
+                  ) : (
+                    <span
+                      className={`badge ${getCategoryBadgeClass(transaction.category)} border border-primary text-primary me-1 px-2 py-1`}
+                    >
+                      {transaction.category}
+                    </span>
+                  )}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {currentTransactions.map(transaction => (
-                <tr key={transaction.id}>
-                  <td>{transaction.date}</td>
-                  <td>{transaction.description}</td>
-                  <td>{transaction.amount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {totalPages > 1 && (
-            <div className="my-4 w-full pagination">
-              {Array.from({ length: totalPages }, (_, index) => (
-                <button key={index} onClick={() => setCurrentPage(index + 1)} disabled={index + 1 === currentPage}>
-                  {index + 1}
-                </button>
-              ))}
-            </div>
-          )}
-        </section>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 };
 
-TransactionHistory.propTypes = {
-  searchParams: PropTypes.shape({
-    id: PropTypes.string,
-    page: PropTypes.number,
-  }),
+const getCategoryBadgeClass = (category) => {
+  switch (category.toLowerCase()) {
+    case "travel":
+      return "border-success text-success";
+    case "taxi":
+      return "border-danger text-danger";
+    default:
+      return "border-primary text-primary";
+  }
 };
 
 export default TransactionHistory;
