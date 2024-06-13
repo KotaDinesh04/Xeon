@@ -68,11 +68,11 @@ app.use("/transactions", transactionsRouter);
 
 //database user data
 app.get("/db", async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
   try {
-    const user = await UserModel.findOne({ "_id.$oid": id });
+    const user = await UserModel.findById(id );
     if (user) {
-      res.json(user);
+      res.json({ accessToken: user.accessToken, name: user.name });
     }
   } catch (er) {
     res.send(er).status(500);
