@@ -4,9 +4,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = ({ accounts }) => {
-  const accountNames = accounts.map((a) => a.name);
-  const balances = accounts.map((a) => a.currentBalance);
+const DoughnutChart = ({ account }) => {
+  const accountNames = account.map((a) => a.name);
+  const balances = account.map((a) => a.current);
 
   const data = {
     datasets: [

@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import TotalBalanceBox from "./TotalBalanceBox";
 import RecentTransactions from "./RecentTransactions";
 import HeaderBox from "./HeaderBox";
@@ -9,6 +10,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
   const [data, setData] = useState({});
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -34,15 +36,21 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
     console.log("Accounts:", accounts);
   }, [accounts]);
 
-  const totalBanks = accounts.length;
+  useEffect(() => {
+    const carouselElement = document.querySelector('#carouselExampleAutoplaying');
+    const handleSlide = (event) => {
+      const newIndex = event.to;
+      setActiveIndex(newIndex);
+    };
 
-  const totalCurrentBalance = accounts.reduce((total, account) => {
-  const currentBalance = typeof account.balances.current === 'number' ? account.balances.current : 0;
-  console.log("Account Current Balance:", currentBalance);
-  return total + currentBalance;
-}, 0);
+    carouselElement.addEventListener('slid.bs.carousel', handleSlide);
 
-  
+    return () => {
+      carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
+    };
+  }, []);
+ 
+  const len = accounts.length;
   return (
     <section className="home">
       <div className="home-content">
@@ -55,12 +63,54 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               user={user}
             />
 
-            <TotalBalanceBox
-              accounts={accounts}
-              totalBanks={totalBanks}
-              totalCurrentBalance={totalCurrentBalance}
-              user={user}
-            />
+            <div
+              id="carouselExampleAutoplaying"
+              className="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div className="carousel-inner">
+                {accounts.map((account, index) => (
+                  <div
+                    className={`carousel-item ${index === activeIndex ? "active" : ""}`}
+                    key={index}
+                  >
+                    <TotalBalanceBox
+                      len={len}
+                      account={account}
+                      all={accounts}
+                      user={user}
+                      isActive = {index=== activeIndex}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="prev"
+                onClick={() => setActiveIndex((activeIndex - 1 + accounts.length) % accounts.length)}
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="next"
+                onClick={() => setActiveIndex((activeIndex + 1) % accounts.length)}
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
           </header>
         </header>
         <RecentTransactions transactions={transactionAdded} />
