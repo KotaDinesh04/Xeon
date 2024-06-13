@@ -50,6 +50,14 @@ mongoose
     console.error("Error connecting to MongoDB: ", error);
   });
 
+// check base server
+
+app.get("/",(req,res)=>{
+  res.send("Hello Server!!");
+})
+
+
+
 //Registration
 app.post("/signup", async (req, res) => {
   const { name, email, password, accessToken } = req.body;
