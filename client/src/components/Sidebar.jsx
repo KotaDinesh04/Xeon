@@ -13,7 +13,7 @@ const Sidebar = ({user}) => {
           gap-2"
         >
           <img
-            src="/public/Noe.svg"
+            src="/Noe.svg"
             width={34}
             height={34}
             alt="logo"

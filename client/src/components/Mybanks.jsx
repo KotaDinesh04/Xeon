@@ -7,40 +7,58 @@ import { useNavigate } from "react-router-dom";
 const Mybanks = () => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user , setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.get('http://localhost:3001/verifyToken', { 
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
-      .then(res => {
-        if (res.data.valid) {
-          setLoggedIn({ firstName: res.data.user.email }); 
-        } else {
+    async function fetch() { 
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          // Verify the token
+          const res = await axios.get('http://localhost:3001/verifyToken', { 
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+
+          if (res.data.valid) {
+            setLoggedIn({ firstName: res.data.user.email, id: res.data.user.id });
+            console.log("The Data in app.js: " + res.data.user.email);
+
+            // Fetch user data using the verified user ID
+            const response = await axios.get("http://localhost:3001/db", { 
+              params: { id: res.data.user.id } 
+            });
+
+            setAccessToken(response.data.accessToken);
+            setUser(response.data.name);
+            console.log("User: ", response.data.accessToken);
+          } else {
+            navigate('/');
+          }
+        } catch (error) {
           navigate('/');
+        } finally {
+          setLoading(false);
         }
-      })
-      .catch(() => {
+      } else {
         navigate('/');
-      })
-      .finally(() => {
-        setLoading(false); 
-      });
-    } else {
-      navigate('/');
-      setLoading(false); 
+        setLoading(false);
+      }
     }
+
+    fetch();
   }, [navigate]);
 
-  if (loading) return null; 
+  if (loading) return null;
   return (
     <section className='flex gap-4'>
         <Sidebar />
         <Bank
            type="greeting"
            title="Welcome"
-           user={loggedIn?.firstName || "Guest"}
+           user={user}
+           accessToken={accessToken}
            subtext="Access and manage your account and transactions efficiently."
 
 

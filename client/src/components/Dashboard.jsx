@@ -6,7 +6,7 @@ import HeaderBox from "./HeaderBox";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RightSidebar from "./RightSidebar";
-
+ 
 
 const Dashboard = ({ type, title, subtext, user, accessToken }) => {
   const [accounts,setAccounts] = useState([]);
