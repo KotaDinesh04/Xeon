@@ -20,11 +20,11 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
           <DoughnutChart account={all} />
         </div>
 
-        <div className="flex flex-col gap-6 ml-12 sm:hidden">
+        <div className=" flex-col gap-6 ml-12 hidden sm:flex">
           <h2 className="header-2">Bank Accounts: {len}</h2>
           <div className="flex flex-col gap-2">
-            <p className="total-balance-label">Total Current Balance</p>
-            <div className="total-balance-amount flex-center gap-2">
+            <p className="total-balance-label hidden sm:block">Total Current Balance</p>
+            <div className="total-balance-amount hidden sm:flex">
               {isActive && (
                 <AnimatedCounter amount={account.balances?.current} />
               )}
@@ -32,7 +32,7 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
           </div>
         </div>
   
-      <div className="ml-16">
+      <div className="ml-16 sm:mt-0 flex justify-center sm:block">
         <BankCard account={account} userName={user} />
       </div>
     </section>
