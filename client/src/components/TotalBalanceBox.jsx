@@ -16,7 +16,7 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
  */
   return (
     <section className="total-balance">
-        <div className="total-balance-chart ml-10 sm:hidden">
+        <div className="total-balance-chart ml-10 hidden sm:flex">
           <DoughnutChart account={all} />
         </div>
 

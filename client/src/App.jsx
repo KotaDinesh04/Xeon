@@ -59,7 +59,7 @@ function App() {
   if (loading) return null;
 
   return (
-    <main className="flex h-screen w-full font-inter gap-2">
+    <main className="flex h-screen w-full font-inter gap-2 sm:gap-0">
       <Sidebar user={loggedIn} />
       <Dashboard
         type="greeting"
