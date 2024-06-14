@@ -51,7 +51,7 @@ mongoose
 
 // check base server
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello Server!!");
 });
 
