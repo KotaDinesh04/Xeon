@@ -33,20 +33,22 @@ const SignUp = ({ onSignupSuccess }) => {
       .then((res) => {
         const [syncResponse, signupResponse] = res; 
         console.log(syncResponse.data);
+        console.log(signupResponse.data);
         onSignupSuccess(); // Call the success callback
       })
       .catch((err) => {
         console.error("There was an error!!", err);
         setErrorMessage("An error occurred: " + err.message);
-      });
-  };
-
-  return (
-    <section className="min-h-screen flex items-center justify-center bg-white">
+        });
+        };
+        
+        return (
+          <section className="min-h-screen flex items-center justify-center bg-white">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold mb-2">Sign Up</h1>
           <p className="text-gray-600">Please enter your details.</p>
+      <PlaidConnectBank sendtoDataParent={handleAccessToken} />
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -146,8 +148,7 @@ const SignUp = ({ onSignupSuccess }) => {
               />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <PlaidConnectBank sendtoDataParent={handleAccessToken} />
+          <div className="flex">
             <button
               type="submit"
               className="w-full py-2 px-4 bg-purple-600 text-white font-bold rounded hover:bg-purple-700"
@@ -158,7 +159,7 @@ const SignUp = ({ onSignupSuccess }) => {
           
           {errorMessage && (
             <p className="text-red-500 text-center mt-2">{errorMessage}</p>
-          )}
+            )}
         </form>
       </div>
     </section>
