@@ -16,12 +16,11 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
  */
   return (
     <section className="total-balance">
-      <div>
-        <div className="total-balance-chart ml-10">
+        <div className="total-balance-chart ml-10 sm:hidden">
           <DoughnutChart account={all} />
         </div>
 
-        <div className="flex flex-col gap-6 ml-12">
+        <div className="flex flex-col gap-6 ml-12 sm:hidden">
           <h2 className="header-2">Bank Accounts: {len}</h2>
           <div className="flex flex-col gap-2">
             <p className="total-balance-label">Total Current Balance</p>
@@ -32,7 +31,7 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
             </div>
           </div>
         </div>
-      </div>
+  
       <div className="ml-16">
         <BankCard account={account} userName={user} />
       </div>
