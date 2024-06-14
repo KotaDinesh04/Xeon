@@ -12,13 +12,15 @@ function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  axios.defaults.baseURL = "https://xeon-two.vercel.app";
+
   useEffect(() => {
     async function fetch() { 
       const token = localStorage.getItem('token');
       if (token) {
         try {
           // Verify the token
-          const res = await axios.get('http://localhost:3001/verifyToken', { 
+          const res = await axios.get('/verifyToken', { 
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -27,7 +29,7 @@ function App() {
             console.log("The Data in app.js: " + res.data.user.email);
 
             // Fetch user data using the verified user ID
-            const response = await axios.get("http://localhost:3001/db", { 
+            const response = await axios.get("/db", { 
               params: { id: res.data.user.id } 
             });
 
