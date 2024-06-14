@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import TotalBalanceBox from "./TotalBalanceBox";
 import RecentTransactions from "./RecentTransactions";
 import HeaderBox from "./HeaderBox";
@@ -40,6 +41,11 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
 
   useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
+    const bootstrapCarousel = new window.bootstrap.Carousel(carouselElement, {
+      interval: 2000,
+      ride: 'carousel'
+    });
+
     const handleSlide = (event) => {
       const newIndex = event.to;
       setActiveIndex(newIndex);
@@ -49,9 +55,22 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
 
     return () => {
       carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
+      bootstrapCarousel.dispose();
     };
   }, []);
- 
+
+  const handleCarouselControl = (direction) => {
+    const carouselElement = document.querySelector('#carouselExampleAutoplaying');
+    if (direction === 'prev') {
+      carouselElement.carousel('prev');
+      setActiveIndex((activeIndex - 1 + accounts.length) % accounts.length);
+    } else if (direction === 'next') {
+      carouselElement.carousel('next');
+      setActiveIndex((activeIndex + 1) % accounts.length);
+    }
+    carouselElement.carousel('cycle'); // Resume the autoplay
+  };
+
   const len = accounts.length;
   return (
     <section className="home">
@@ -70,12 +89,11 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               className="carousel slide"
               data-bs-ride="carousel"
               data-bs-interval="2000"
-            
             >
               <div className="carousel-inner">
                 {accounts.map((account, index) => (
                   <div
-                    className={` carousel-item ${index === activeIndex ? "active" : ""}`}
+                    className={`carousel-item ${index === activeIndex ? "active" : ""}`}
                     key={index}
                   >
                     <TotalBalanceBox
@@ -83,17 +101,17 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                       account={account}
                       all={accounts}
                       user={user}
-                      isActive = {index=== activeIndex}
+                      isActive={index === activeIndex}
                     />
                   </div>
                 ))}
               </div>
               <button
-                className="carousel-control-prev  bg-black-1"
+                className="carousel-control-prev"
                 type="button"
                 data-bs-target="#carouselExampleAutoplaying"
                 data-bs-slide="prev"
-                onClick={() => setActiveIndex((activeIndex - 1 + accounts.length) % accounts.length)}
+                onClick={() => handleCarouselControl('prev')}
               >
                 <span
                   className="carousel-control-prev-icon"
@@ -102,11 +120,11 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
-                className="carousel-control-next bg-black-1"
+                className="carousel-control-next"
                 type="button"
                 data-bs-target="#carouselExampleAutoplaying"
                 data-bs-slide="next"
-                onClick={() => setActiveIndex((activeIndex + 1) % accounts.length)}
+                onClick={() => handleCarouselControl('next')}
               >
                 <span
                   className="carousel-control-next-icon"
