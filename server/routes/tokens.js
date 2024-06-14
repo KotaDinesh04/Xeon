@@ -4,7 +4,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
-
 const route = express.Router();
 
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
@@ -39,8 +38,8 @@ route.post("/create_link_token", async function (req, res) {
     client_name: "Plaid Test App",
     products: ["transactions"],
     language: "en",
-    redirect_uri: "https://xeon-bank-nine.vercel.app/",
-    country_codes: ["US","CA","FR"],
+    redirect_uri: "https://xeon-bank-five.vercel.app/",
+    country_codes: ["US", "CA", "FR"],
   };
   try {
     const createTokenResponse = await plaidclient.linkTokenCreate(request);
@@ -68,34 +67,30 @@ route.post("/exchange_public_token", async function (req, res, next) {
   }
 });
 
-
-route.post("/auth" , async function(req,res){
-    try{
-      const accessToken = req.body.accessToken;
-      const request= {
-        access_token: accessToken,
-      };
-        const plaidresponse = await plaidclient.authGet(request);
-        res.json(plaidresponse.data);
-
-      }catch(e){
-        res.status(500).send("Failure")
-      }
+route.post("/auth", async function (req, res) {
+  try {
+    const accessToken = req.body.accessToken;
+    const request = {
+      access_token: accessToken,
+    };
+    const plaidresponse = await plaidclient.authGet(request);
+    res.json(plaidresponse.data);
+  } catch (e) {
+    res.status(500).send("Failure");
+  }
 });
 
-route.post("/transaction/sync", async (req,res)=>{
-  try{
+route.post("/transaction/sync", async (req, res) => {
+  try {
     const request = {
-      accessToken: accessToken
+      accessToken: accessToken,
     };
     const response = await client.transactionsSync(request);
     const data = response.data;
     res.json(data);
-  }catch(e){
-    res.status(500).send("Failure")
+  } catch (e) {
+    res.status(500).send("Failure");
   }
-})
+});
 
-
-module.exports = {route , plaidclient};
-
+module.exports = { route, plaidclient };
