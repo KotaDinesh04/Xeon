@@ -9,10 +9,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Authorize from "./components/Authorize/Authorize.jsx";
 import Transaction from "./components/Transaction.jsx";
 import Sign_UP from "./components/Authorize/Sign_UP.jsx";
+import Sidebar from "./components/Sidebar.jsx";
 const routerVariable = createBrowserRouter([
   {
     path: "/",
-    element: <Authorize />,
+    element: <Sidebar />,
   },
   {
     path: "/signup",

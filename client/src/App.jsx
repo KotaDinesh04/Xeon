@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./globals.css";
-import Mobile from "./components/Mobile";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);

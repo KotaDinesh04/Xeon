@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { sidebarLinks } from "/constants/index";
 import Footer from "./Footer";
 import './sidebar.css';
+import { IoReorderThreeOutline } from "react-icons/io5";
 
 const Sidebar = ({ user }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Set initial state to false to keep sidebar closed initially
   const pathname = window.location.pathname;
 
   const toggleSidebar = () => {
@@ -15,7 +16,7 @@ const Sidebar = ({ user }) => {
   return (
     <section className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <button onClick={toggleSidebar} className="toggle-button">
-        {isOpen ? 'Close' : 'Open'}
+        <IoReorderThreeOutline size={24} />
       </button>
       <nav className="flex flex-col gap-4">
         <Link
