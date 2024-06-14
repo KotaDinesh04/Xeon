@@ -35,7 +35,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
           <h2 className="header-2">
               Your cards
           </h2>
-          <div className= "flex flex-wrap gap-6 md:gap-0">
+          <div className= "flex flex-wrap gap-6">
           {accounts.map((account, index) => (
 
             <BankCard 

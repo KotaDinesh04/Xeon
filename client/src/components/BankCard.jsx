@@ -3,7 +3,7 @@ import React from "react";
 const BankCard = ({ account, userName, showBalance = true }) => {
   //console.log(account);
   return (
-    <div className="bank-card">
+    <div className="bank-card fixed">
       <div className="bank-card_content">
         <div>
           <h1 className="text-16 font-semibold text-white">
