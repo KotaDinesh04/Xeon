@@ -62,23 +62,13 @@ function App() {
   return (
     <main className="flex h-screen w-full font-inter gap-2">
       <Sidebar user={loggedIn} />
-{/* 
-      <div className="flex size-full flex-col">
-        <div className="root-layout">
-          <img src="/Noe.png" width={30} height={30} />
-          <div>
-            <Mobile user={user} />
-          </div>
-        </div>
- */}
-        <Dashboard
-          type="greeting"
-          title="Welcome"
-          user={user}
-          accessToken={accessToken}
-          subtext="Access and manage your account and transactions efficiently."
-        />
-      </div>
+      <Dashboard
+        type="greeting"
+        title="Welcome"
+        user={user}
+        accessToken={accessToken}
+        subtext="Access and manage your account and transactions efficiently."
+      />
     </main>
   );
 }
