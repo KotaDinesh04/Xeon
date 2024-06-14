@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
+
 import React from "react";
 import "./Sign_IN.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +23,7 @@ const Sign_IN = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://xeon-two.vercel.app/login", { email, password })
+      .post("/login", { email, password })
 
       .then((res) => {
         console.log("login: " + res.data);
