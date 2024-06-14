@@ -69,11 +69,13 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               id="carouselExampleAutoplaying"
               className="carousel slide"
               data-bs-ride="carousel"
+              data-bs-interval="2000"
+            
             >
               <div className="carousel-inner">
                 {accounts.map((account, index) => (
                   <div
-                    className={` carousel-item ${index === activeIndex ? "active data-bs-interval=2000" : ""}`}
+                    className={` carousel-item ${index === activeIndex ? "active" : ""}`}
                     key={index}
                   >
                     <TotalBalanceBox
