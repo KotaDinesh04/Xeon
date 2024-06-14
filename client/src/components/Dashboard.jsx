@@ -88,7 +88,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               id="carouselExampleAutoplaying"
               className="carousel slide"
               data-bs-ride="carousel"
-              data-bs-interval="2000"
+              data-bs-interval="4000"
             >
               <div className="carousel-inner">
                 {accounts.map((account, index) => (
