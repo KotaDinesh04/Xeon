@@ -1,14 +1,12 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 import React from "react";
 import "./Sign_IN.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+axios.defaults.baseURL = "https://xeon-1dj2hdkka-pavan-vanams-projects.vercel.app";
 const Sign_IN = () => {
-  
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState(""); //state for error message
@@ -22,14 +20,14 @@ const Sign_IN = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/login", { email, password })
+      .post("/login", { email, password })
 
       .then((res) => {
         console.log("login: " + res.data);
-// Extracting token from res
-        const token = res.data.token; 
+        // Extracting token from res
+        const token = res.data.token;
         if (token) {
-          localStorage.setItem('token', token); // Store token in local storage
+          localStorage.setItem("token", token); // Store token in local storage
           navigate("/home"); // Redirect to home page
         } else {
           setErrorMessage(" " + res.data);

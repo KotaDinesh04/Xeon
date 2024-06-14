@@ -37,7 +37,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 //DataBase connection
 mongoose
   .connect(
@@ -52,11 +51,9 @@ mongoose
 
 // check base server
 
-app.get("/",(req,res)=>{
+app.use("/", (req, res) => {
   res.send("Hello Server!!");
-})
-
-
+});
 
 //Registration
 app.post("/signup", async (req, res) => {
@@ -78,7 +75,7 @@ app.use("/transactions", transactionsRouter);
 app.get("/db", async (req, res) => {
   const { id } = req.query;
   try {
-    const user = await UserModel.findById(id );
+    const user = await UserModel.findById(id);
     if (user) {
       res.json({ accessToken: user.accessToken, name: user.name });
     }
@@ -87,9 +84,8 @@ app.get("/db", async (req, res) => {
   }
 });
 
-
 app.get("/transdb", async (req, res) => {
-  const accessToken = req.headers.authorization?.split(' ')[1];
+  const accessToken = req.headers.authorization?.split(" ")[1];
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is missing" });
   }
@@ -175,23 +171,22 @@ server.listen(PORT, () => {
   console.log("Server is Running " + PORT);
 });
 
+// web sockeet
 
-// web sockeet 
-
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 5500 });
 
-wss.on('connection', (ws) => {
-  console.log('New client connected');
-  ws.send('Welcome to the WebSocket server!');
+wss.on("connection", (ws) => {
+  console.log("New client connected");
+  ws.send("Welcome to the WebSocket server!");
 
-  ws.on('message', (message) => {
+  ws.on("message", (message) => {
     console.log(`Received message: ${message}`);
   });
 
-  ws.on('close', () => {
-    console.log('Client disconnected');
+  ws.on("close", () => {
+    console.log("Client disconnected");
   });
 });
 
-console.log('WebSocket server is running on ws://127.0.0.1:5500/ws');
+console.log("WebSocket server is running on ws://127.0.0.1:5500/ws");
