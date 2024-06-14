@@ -14,7 +14,7 @@ const Sidebar = ({ user }) => {
   };
 
   return (
-    <section className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+    <section className={`sidebar ${isOpen ? 'open' : 'closed'} w-full md:w-1/4`}>
       <button onClick={toggleSidebar} className="toggle-button">
       <IoReorderThree size={24}/>
       </button>

@@ -27,7 +27,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
   }, [accessToken]);
   console.log(accounts);
   return (
-    <div className="flex w-full">
+    <div className="flex w-full md:w-3/4 p-4">
       <div className="my-banks">
         <HeaderBox title={title} user={user} subtext={subtext} type={type} />
 
