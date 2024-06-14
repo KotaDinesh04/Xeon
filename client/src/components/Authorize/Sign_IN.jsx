@@ -42,10 +42,10 @@ const Sign_IN = () => {
       });
   };
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-10 lg:px-2">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          className="mx-auto h-14 w-auto"
+          className="mx-auto h-16 w-auto"
           src="/Noe.png"
           alt="Your Company"
         />
@@ -117,15 +117,7 @@ const Sign_IN = () => {
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Don't have an account?{" "}
-          <button
-            onClick={onSignUpClick}
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
-            Sign up now
-          </button>
-        </p>
+    
       </div>
     </div>
   );

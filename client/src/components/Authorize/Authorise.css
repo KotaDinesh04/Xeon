@@ -50,6 +50,8 @@
 
     .signIn-text {
         width: 100%;
+        position: absolute;
+        left: 10%;
     }
 
     .image-container {

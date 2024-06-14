@@ -40,12 +40,11 @@ const PlaidConnectBank = ({ sendtoDataParent }) => {
     <PlaidAccessToken public_token={publicToken} sendtoParent={handleChild} />
   ) : (
     <button
-      style={{ marginRight: "25%", marginTop: "10px" }}
-      className="flex justify-center btn btn-primary btn-md submit-btn"
+      className="w-full py-2 px-4 bg-purple-600 text-white font-bold rounded hover:bg-purple-700"
       onClick={() => open()}
       disabled={!ready}
     >
-      Connect a bank account
+      Connect a bank
     </button>
   );
 };

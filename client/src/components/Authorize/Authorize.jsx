@@ -1,21 +1,43 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Sign_IN from "./Sign_IN";
-// import Sign_UP from "./Sign_UP";
 import image from '../../icons/auth.jpg';
-import './Authorise.css';
-import LoadingBar from 'react-top-loading-bar';
+import SignUp from './Sign_UP';
 
 const Authorize = () => {
+  const [flag, setFlag] = useState(false);
+
+  const handleToggle = () => {
+    setFlag((prevFlag) => !prevFlag);
+  };
 
   return (
-    <section className="body-auth">
-      <div className="main-container-auth">
-        <div className="signIn-text-auth">
-          <Sign_IN/>
-        </div>
-        <div className="image-container">
-          <img src={image} className="image sidebar" alt="Auth" />
-        </div> 
+    <section className="flex flex-col md:flex-row h-screen">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white p-8 relative">
+        {flag ? (
+          <>
+            <Sign_IN />
+            <p className="text-center text-gray-600 mt-4 absolute bottom-8">
+              Don't have an account?{" "}
+              <button onClick={handleToggle} className="text-blue-500 hover:underline">
+                Sign Up
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <SignUp />
+            <p className="text-center text-gray-600 mt-4 absolute bottom-6">
+              Already have an account?{" "}
+              <button onClick={handleToggle} className="text-blue-500 hover:underline">
+                Login
+              </button>
+            </p>
+          </>
+        )}
+      </div>
+      {/* Hide image on small devices */}
+      <div className="hidden md:block w-full md:w-1/2 flex items-center justify-center bg-gray-100 p-8">
+        <img src={image} className="w-full h-full object-cover" alt="Auth" />
       </div>
     </section>
   );
