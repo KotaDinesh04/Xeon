@@ -18,7 +18,7 @@ const Sidebar = ({ user }) => {
       <button onClick={toggleSidebar} className="toggle-button">
       <IoReorderThree size={24}/>
       </button>
-      <nav className="flex flex-col gap-4">
+      <nav className="flex flex-col gap-4 sm:absolute">
         <Link
           to="/"
           className="mb-12 flex cursor-pointer items-center gap-2"
