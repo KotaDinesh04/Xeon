@@ -4,6 +4,9 @@ import Bank from './MyBankAccounts'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
+
 const Mybanks = () => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +20,7 @@ const Mybanks = () => {
       if (token) {
         try {
           // Verify the token
-          const res = await axios.get('http://localhost:3001/verifyToken', { 
+          const res = await axios.get('/verifyToken', { 
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -26,7 +29,7 @@ const Mybanks = () => {
             console.log("The Data in app.js: " + res.data.user.email);
 
             // Fetch user data using the verified user ID
-            const response = await axios.get("http://localhost:3001/db", { 
+            const response = await axios.get("/db", { 
               params: { id: res.data.user.id } 
             });
 

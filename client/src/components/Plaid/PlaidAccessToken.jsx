@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
 const PlaidAccessToken = ({ public_token, sendtoParent }) => {
   const [accessToken, setAccessToken] = useState();

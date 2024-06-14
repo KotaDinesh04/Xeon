@@ -3,7 +3,7 @@ import axios from "axios";
 import { usePlaidLink } from "react-plaid-link";
 import PlaidAccessToken from "./PlaidAccessToken";
 
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
 const PlaidConnectBank = ({ sendtoDataParent }) => {
   const [linkToken, setLinkToken] = useState("");

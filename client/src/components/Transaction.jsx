@@ -3,7 +3,7 @@ import TransactionHistory from "./TransactionHistory"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 const Transaction = () => {
   // const [accounts, setAccounts] = useState([]);
   const [user,setUser]= useState(null);
@@ -17,7 +17,7 @@ const Transaction = () => {
       if (token) {
         try {
           // Verify the token
-          const res = await axios.get('http://localhost:3001/verifyToken', { 
+          const res = await axios.get('/verifyToken', { 
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -26,7 +26,7 @@ const Transaction = () => {
             console.log("The Data in app.js: " + res.data.user.email);
 
             // Fetch user data using the verified user ID
-            const response = await axios.get("http://localhost:3001/db", { 
+            const response = await axios.get("/db", { 
               params: { id: res.data.user.id } 
             });
 

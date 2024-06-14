@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 import axios from "axios";
 
-
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 const RecentTransactions = ({ transactions }) => {
   const recentTransactions = [];
   let index = 0;

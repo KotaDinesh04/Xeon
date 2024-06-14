@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import RightSidebar from "./RightSidebar";
 
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
+
 const Dashboard = ({ type, title, subtext, user, accessToken }) => {
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
@@ -15,7 +17,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/transdb", {
+        const res = await axios.get("/transdb", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

@@ -4,14 +4,14 @@ import axios from "axios";
 import BankCard from "./BankCard";
 import HeaderBox from "./HeaderBox";
 
-
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
 const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
   const [accounts , setAccounts] = useState([]);
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/transdb", {
+        const res = await axios.get("/transdb", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

@@ -17,7 +17,7 @@ const Sign_UP = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [accessToken, setAccessToken] = useState(null);
-  axios.defaults.baseURL = "http://localhost:3001";
+  axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
   const handleAccessToken = (access) => {
     setAccessToken(access);

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
+
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
 const TransactionHistory = ({ accessToken, user }) => {
   const [accounts, setAccounts] = useState([]);
@@ -10,7 +12,7 @@ const TransactionHistory = ({ accessToken, user }) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/transdb", {
+        const res = await axios.get("/transdb", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -38,17 +40,29 @@ const TransactionHistory = ({ accessToken, user }) => {
         <table className="table table-striped table-hover mt-3 w-100">
           <thead>
             <tr>
-              <th scope="col" className="text-nowrap">Transaction</th>
-              <th scope="col" className="text-nowrap">Amount</th>
-              <th scope="col" className="text-nowrap">Date</th>
-              <th scope="col" className="text-nowrap">Category</th>
+              <th scope="col" className="text-nowrap">
+                Transaction
+              </th>
+              <th scope="col" className="text-nowrap">
+                Amount
+              </th>
+              <th scope="col" className="text-nowrap">
+                Date
+              </th>
+              <th scope="col" className="text-nowrap">
+                Category
+              </th>
             </tr>
           </thead>
           <tbody>
             {transactionAdded.map((transaction) => (
               <tr key={transaction.transaction_id}>
                 <td className="text-nowrap">{transaction.name}</td>
-                <td className={`text-nowrap ${transaction.amount >= 0 ? "text-success" : "text-danger"}`}>
+                <td
+                  className={`text-nowrap ${
+                    transaction.amount >= 0 ? "text-success" : "text-danger"
+                  }`}
+                >
                   ${Math.abs(transaction.amount).toFixed(2)}
                 </td>
                 <td className="text-nowrap">{transaction.authorized_date}</td>
@@ -57,14 +71,18 @@ const TransactionHistory = ({ accessToken, user }) => {
                     transaction.category.map((category, index) => (
                       <span
                         key={index}
-                        className={`badge ${getCategoryBadgeClass(category)} border border-primary text-primary me-1 px-2 py-1`}
+                        className={`badge ${getCategoryBadgeClass(
+                          category
+                        )} border border-primary text-primary me-1 px-2 py-1`}
                       >
                         {category}
                       </span>
                     ))
                   ) : (
                     <span
-                      className={`badge ${getCategoryBadgeClass(transaction.category)} border border-primary text-primary me-1 px-2 py-1`}
+                      className={`badge ${getCategoryBadgeClass(
+                        transaction.category
+                      )} border border-primary text-primary me-1 px-2 py-1`}
                     >
                       {transaction.category}
                     </span>

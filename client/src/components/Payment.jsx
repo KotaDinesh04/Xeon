@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
+
 const Payment = () => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const Payment = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:3001/verifyToken', { 
+      axios.get('/verifyToken', { 
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(res => {
