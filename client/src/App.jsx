@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./globals.css";
+import Mobile from "./components/Mobile";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -15,37 +16,40 @@ function App() {
   axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
   useEffect(() => {
-    async function fetch() { 
-      const token = localStorage.getItem('token');
+    async function fetch() {
+      const token = localStorage.getItem("token");
       if (token) {
         try {
           // Verify the token
-          const res = await axios.get('/verifyToken', { 
-            headers: { 'Authorization': `Bearer ${token}` }
+          const res = await axios.get("/verifyToken", {
+            headers: { Authorization: `Bearer ${token}` },
           });
 
           if (res.data.valid) {
-            setLoggedIn({ firstName: res.data.user.email, id: res.data.user.id });
+            setLoggedIn({
+              firstName: res.data.user.email,
+              id: res.data.user.id,
+            });
             console.log("The Data in app.js: " + res.data.user.email);
 
             // Fetch user data using the verified user ID
-            const response = await axios.get("/db", { 
-              params: { id: res.data.user.id } 
+            const response = await axios.get("/db", {
+              params: { id: res.data.user.id },
             });
 
             setAccessToken(response.data.accessToken);
             setUser(response.data.name);
             console.log("User: ", response.data.accessToken);
           } else {
-            navigate('/');
+            navigate("/");
           }
         } catch (error) {
-          navigate('/');
+          navigate("/");
         } finally {
           setLoading(false);
         }
       } else {
-        navigate('/');
+        navigate("/");
         setLoading(false);
       }
     }
@@ -56,21 +60,26 @@ function App() {
   if (loading) return null;
 
   return (
-    <section className="flex h-screen w-full font-inter gap-2">
+    <main className="flex h-screen w-full font-inter gap-2">
       <Sidebar user={loggedIn} />
-
-      <div>
-        
+{/* 
+      <div className="flex size-full flex-col">
+        <div className="root-layout">
+          <img src="/Noe.png" width={30} height={30} />
+          <div>
+            <Mobile user={user} />
+          </div>
+        </div>
+ */}
+        <Dashboard
+          type="greeting"
+          title="Welcome"
+          user={user}
+          accessToken={accessToken}
+          subtext="Access and manage your account and transactions efficiently."
+        />
       </div>
-
-      <Dashboard
-        type="greeting"
-        title="Welcome"
-        user={user}
-        accessToken={accessToken}
-        subtext="Access and manage your account and transactions efficiently."
-      />
-    </section>
+    </main>
   );
 }
 

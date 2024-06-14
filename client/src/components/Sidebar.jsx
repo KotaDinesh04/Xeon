@@ -1,24 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { sidebarLinks } from "/constants/index";
 import Footer from "./Footer";
+import './sidebar.css';
 
-const Sidebar = ({user}) => {
+const Sidebar = ({ user }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = window.location.pathname;
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <section className="sidebar">
+    <section className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+      <button onClick={toggleSidebar} className="toggle-button">
+        {isOpen ? 'Close' : 'Open'}
+      </button>
       <nav className="flex flex-col gap-4">
         <Link
           to="/"
-          className="mb-12 flex cursor-pointer items-center
-          gap-2"
+          className="mb-12 flex cursor-pointer items-center gap-2"
         >
           <img
             src="/Noe.svg"
             width={34}
             height={34}
             alt="logo"
-            className="size-[32px] 
-              max-xl:size-14 "
+            className="size-[32px] max-xl:size-14"
           />
           <h1 className="sidebar-logo">Xeon</h1>
         </Link>
@@ -46,7 +55,6 @@ const Sidebar = ({user}) => {
                     ? "sidebar-label text-white"
                     : "sidebar-label black font-inter"
                 }
-              
               >
                 {links.label}
               </p>

@@ -118,7 +118,7 @@
   }
 
   .total-balance {
-    @apply flex w-auto items-center gap-4 rounded-xl border border-gray-200 p-4 shadow-chart sm:gap-6 sm:p-6;
+    @apply flex w-auto items-center gap-4 rounded-xl border border-gray-200 p-4 shadow-chart sm:flex-col sm:h-auto;
   }
 
   .total-balance-chart {
