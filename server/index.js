@@ -170,23 +170,3 @@ const server = http.createServer(app);
 server.listen(PORT, () => {
   console.log("Server is Running " + PORT);
 });
-
-// web sockeet
-
-const WebSocket = require("ws");
-const wss = new WebSocket.Server({ port: 5500 });
-
-wss.on("connection", (ws) => {
-  console.log("New client connected");
-  ws.send("Welcome to the WebSocket server!");
-
-  ws.on("message", (message) => {
-    console.log(`Received message: ${message}`);
-  });
-
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-});
-
-console.log("WebSocket server is running on ws://127.0.0.1:5500/ws");
