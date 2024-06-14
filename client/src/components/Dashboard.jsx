@@ -65,15 +65,10 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               user={user}
             />
 
-            <div
-              id="carouselExampleAutoplaying"
-              className="carousel slide"
-              data-bs-ride="carousel"
-              data-bs-interval="2000"
-            
-            >
-              <div className="carousel-inner">
-                {accounts.map((account, index) => (
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+    {accounts.map((account, index) => (
                   <div
                     className={` carousel-item ${index === activeIndex ? "active" : ""}`}
                     key={index}
@@ -87,6 +82,25 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                     />
                   </div>
                 ))}
+    </div>
+   
+  </div>
+</div>
+
+
+
+
+
+
+         {/*    <div
+              id="carouselExampleAutoplaying"
+              className="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="2000"
+            
+            >
+              <div className="carousel-inner">
+                
               </div>
               <button
                 className="carousel-control-prev"
@@ -114,7 +128,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                 ></span>
                 <span className="visually-hidden">Next</span>
               </button>
-            </div>
+            </div> */}
           </header>
         </header>
         <RecentTransactions transactions={transactionAdded} />
