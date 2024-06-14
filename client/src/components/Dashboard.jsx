@@ -38,7 +38,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
     console.log("Accounts:", accounts);
   }, [accounts]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
     const handleSlide = (event) => {
       const newIndex = event.to;
@@ -50,7 +50,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
     return () => {
       carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
     };
-  }, []); */
+  }, []);
  
   const len = accounts.length;
   return (
@@ -65,10 +65,15 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
               user={user}
             />
 
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-    {accounts.map((account, index) => (
+            <div
+              id="carouselExampleAutoplaying"
+              className="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="2000"
+            
+            >
+              <div className="carousel-inner">
+                {accounts.map((account, index) => (
                   <div
                     className={` carousel-item ${index === activeIndex ? "active" : ""}`}
                     key={index}
@@ -82,28 +87,9 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                     />
                   </div>
                 ))}
-    </div>
-   
-  </div>
-</div>
-
-
-
-
-
-
-         {/*    <div
-              id="carouselExampleAutoplaying"
-              className="carousel slide"
-              data-bs-ride="carousel"
-              data-bs-interval="2000"
-            
-            >
-              <div className="carousel-inner">
-                
               </div>
               <button
-                className="carousel-control-prev"
+                className="carousel-control-prev  bg-black-1"
                 type="button"
                 data-bs-target="#carouselExampleAutoplaying"
                 data-bs-slide="prev"
@@ -116,7 +102,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
-                className="carousel-control-next"
+                className="carousel-control-next bg-black-1"
                 type="button"
                 data-bs-target="#carouselExampleAutoplaying"
                 data-bs-slide="next"
@@ -128,7 +114,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
                 ></span>
                 <span className="visually-hidden">Next</span>
               </button>
-            </div> */}
+            </div>
           </header>
         </header>
         <RecentTransactions transactions={transactionAdded} />
