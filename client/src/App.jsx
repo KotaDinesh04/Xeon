@@ -59,7 +59,9 @@ function App() {
     <section className="flex h-screen w-full font-inter gap-2">
       <Sidebar user={loggedIn} />
 
-      
+      <div>
+        
+      </div>
 
       <Dashboard
         type="greeting"

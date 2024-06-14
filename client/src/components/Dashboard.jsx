@@ -136,7 +136,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
         </header>
         <RecentTransactions transactions={transactionAdded} />
       </div>
-      <RightSidebar transactions={transactionAdded}/>
+      {/* <RightSidebar transactions={transactionAdded}/> */}
     </section>
   );
 };
