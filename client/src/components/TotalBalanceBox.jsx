@@ -30,7 +30,7 @@ const TotalBalanceBox = ({ account,len,all, user, isActive }) => {
         </div>
       </div>
 
-      <div className="ml-10">
+      <div>
           <BankCard account={account} userName={user} />
       </div>
     </section>
