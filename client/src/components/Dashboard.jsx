@@ -38,7 +38,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
     console.log("Accounts:", accounts);
   }, [accounts]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
     const handleSlide = (event) => {
       const newIndex = event.to;
@@ -50,7 +50,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
     return () => {
       carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
     };
-  }, []);
+  }, []); */
  
   const len = accounts.length;
   return (
