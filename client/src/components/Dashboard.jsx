@@ -86,7 +86,7 @@ const Dashboard = ({ type, title, subtext, user, accessToken }) => {
 
             <div
               id="carouselExampleAutoplaying"
-              className="carousel slide"
+              className="carousel slide hidden sm:flex"
               data-bs-ride="carousel"
             >
               <div className="carousel-inner">
