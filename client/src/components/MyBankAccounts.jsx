@@ -27,7 +27,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
   }, [accessToken]);
   console.log(accounts);
   return (
-    <div className="flex w-full md:w-3/4 p-4">
+    <div className="flex">
       <div className="my-banks">
         <HeaderBox title={title} user={user} subtext={subtext} type={type} />
 
@@ -35,7 +35,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
           <h2 className="header-2">
               Your cards
           </h2>
-          <div className= "flex flex-wrap gap-6">
+          <div className= "flex flex-wrap gap-6 md:gap-0">
           {accounts.map((account, index) => (
 
             <BankCard 
