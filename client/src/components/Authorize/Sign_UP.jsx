@@ -1,9 +1,8 @@
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PlaidConnectBank from "../Plaid/PlaidConnectBank";
 
-const SignUp = () => {
+const SignUp = ({ onSignupSuccess }) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -21,9 +20,6 @@ const SignUp = () => {
     setAccessToken(access);
   };
 
-  const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,7 +33,7 @@ const SignUp = () => {
       .then((res) => {
         const [syncResponse, signupResponse] = res; 
         console.log(syncResponse.data);
-        navigate("/");
+        onSignupSuccess(); // Call the success callback
       })
       .catch((err) => {
         console.error("There was an error!!", err);
