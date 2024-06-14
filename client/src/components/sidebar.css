@@ -18,9 +18,8 @@
   display: none;
   position: absolute;
   top: 1rem;
-  left: 1rem;
-  background-color: #000;
-  color: #fff;
+  left: 60px;
+  color: #000;
   border: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
