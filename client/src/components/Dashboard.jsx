@@ -13,6 +13,7 @@ axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Dashboard = () => {
   const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser
+  console.log("Dash board",name);
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,7 +48,7 @@ const Dashboard = () => {
     if (storedUser) {
       setUserContext(storedUser); // Update user context with stored data
     }
-  }, [setUserContext]);
+  }, []);
 
   useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
