@@ -29,13 +29,6 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    "script-src 'self' 'unsafe-eval' https://*.plaid.com https://www.gstatic.com/recaptcha/ https://www.google.com/recaptcha/ https://cdn.getpinwheel.com 'sha256-/vBLPmGAtk+M1jf+ELFldGuWmC95W++i9SAdPi6fuGM=' 'sha256-Q2BuusfJf7qPwvz9U1VOF502KW7JtNFXxsDsxfPIu50=' blob:;"
-  );
-  next();
-});
 
 //DataBase connection
 mongoose
@@ -108,7 +101,7 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await UserModel.findOne({ email: email });
-    if (user.accessToken) {
+    if (user) {
       if (user.password === password) {
         const accessToken = user.accessToken;
         const name = user.name;
