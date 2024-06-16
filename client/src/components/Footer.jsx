@@ -14,7 +14,7 @@ const navigate = useNavigate();
     <footer className="footer mb-12">
       <div className={type === 'mobile' ? 'footer_name-mobile' : 'footer_name'}>
         <p className="text-xl mt-3 font-bold text-gray-700">
-          {name[0]}
+          {"X"}
         </p>
       </div>
 
