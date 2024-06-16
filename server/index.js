@@ -68,7 +68,7 @@ app.use("/transactions", transactionsRouter);
 app.get("/db", async (req, res) => {
   const { email } = req.query;
   try {
-    const user = await UserModel.findOne(email);
+    const user = await UserModel.findById(email);
     if (user) {
       res.json({ accessToken: user.accessToken, name: user.name });
     }
