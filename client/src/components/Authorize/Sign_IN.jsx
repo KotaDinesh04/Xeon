@@ -20,7 +20,7 @@ const Sign_IN = () => {
       .post("/login", { email, password })
       .then((res) => {
         console.log("login: ", res.data.accessToken);
-        console.log(res.data);
+        console.log("login name",res.data.name);
         // Update the user context with email and accessToken
         setUserContext ({
           name : res.data.name,
