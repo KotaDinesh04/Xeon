@@ -10,7 +10,8 @@ import './globals.css';
 function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const {email, setUserContext} = useUser();
+  console.log(email);
   axios.defaults.baseURL = import.meta.env.VITE_server;
 
 /* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
@@ -35,8 +36,19 @@ function App() {
         }); 
       }
     }
-
+    async function userdb(){
+      axios.get("/db",{email : email})
+      .then((res)=>{
+        console.log(res.data.name);
+        setUserContext({
+          name : res.data.name
+        })
+      }).catch((er)=>{
+        console.log(er);
+      })
+    }
     fetch();
+    userdb();
   }, [navigate]);
 
   return (

@@ -14,15 +14,13 @@ const Sign_IN = () => {
   const { setUserContext } = useUser(); // Destructuring setUser from useUser hook
   const navigate = useNavigate();
 
-  axios.defaults.withCredentials = true;
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("/login", { email, password })
       .then((res) => {
         console.log("login: ", res.data.accessToken);
-        
+        console.log(res.data);
         // Update the user context with email and accessToken
         setUserContext ({
           name : res.data.name,
