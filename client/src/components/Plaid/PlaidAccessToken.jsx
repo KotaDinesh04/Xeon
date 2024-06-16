@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUser } from "../UserContext";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
 
-/* axios.defaults.baseURL = "http://localhost:3001"; */
+axios.defaults.baseURL = import.meta.env.VITE_server;
 
 
 const PlaidAccessToken = ({ public_token}) => {

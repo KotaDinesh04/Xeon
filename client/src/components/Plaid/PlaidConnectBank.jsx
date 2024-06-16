@@ -4,10 +4,10 @@ import { usePlaidLink } from "react-plaid-link";
 import PlaidAccessToken from "./PlaidAccessToken";
 
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app"; 
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app";  */
 
 
-/* axios.defaults.baseURL = "http://localhost:3001"; */
+axios.defaults.baseURL = import.meta.env.VITE_server;
 const PlaidConnectBank = () => {
   const [linkToken, setLinkToken] = useState("");
   const [publicToken, setPublicToken] = useState(null);

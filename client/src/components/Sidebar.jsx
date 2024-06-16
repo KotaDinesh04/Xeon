@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import { IoReorderThree } from "react-icons/io5";
 import { useUser } from "./UserContext";
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false); // Set initial state to false to keep sidebar closed initially
   const pathname = window.location.pathname;
   const { name, email } = useUser();

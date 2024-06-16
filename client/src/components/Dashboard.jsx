@@ -8,7 +8,8 @@ import { useUser } from './UserContext';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-axios.defaults.baseURL = "https://xeon-two.vercel.app"; 
+
+axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Dashboard = () => {
   const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser

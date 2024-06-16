@@ -3,8 +3,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
 import { useUser } from "./UserContext";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
-/* axios.defaults.baseURL = "http://localhost:3001"; */
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
+axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const TransactionHistory = () => {
   const {accessToken} = useUser();

@@ -14,10 +14,10 @@ const SignUp = ({ onSignupSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  axios.defaults.baseURL = "https://xeon-two.vercel.app";
+  /* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
  const {accessToken} = useUser();
 
-/*   axios.defaults.baseURL = "http://localhost:3001"; */
+  axios.defaults.baseURL = import.meta.env.VITE_server;
 
   const handleSubmit = (e) => {
     e.preventDefault();

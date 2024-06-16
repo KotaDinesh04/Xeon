@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../UserContext";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
+axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Sign_IN = () => {
   const [email, setEmail] = useState("");
