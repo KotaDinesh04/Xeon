@@ -15,7 +15,7 @@ const Authorize = () => {
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white p-8 relative">
         {flag ? (
            <div className='flex flex-col gap-1'>
-            <SignUp onSignupSuccess={handleToggle} />
+            <SignUp/>
             <p className="text-center text-gray-600 font-bold">
               Already have an account?{" "}
               <button onClick={handleToggle} className="text-blue-500 hover:underline">

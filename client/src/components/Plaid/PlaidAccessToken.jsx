@@ -8,14 +8,16 @@ axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
 
 const PlaidAccessToken = ({ public_token}) => {
-  const {setAccessToken} = useUser();
+  const {setUserContext} = useUser();
   useEffect(() => {
     async function fetch() {
       let accessToken = await axios.post("/token/exchange_public_token", {
         public_token: public_token,
       });
       console.log("access token : ", accessToken.data.accessToken);
-      setAccessToken(accessToken.data.accessToken);
+      setUserContext({
+        accessToken : accessToken.data.accessToken
+      });
     }
     fetch();
   }, []);
