@@ -44,13 +44,6 @@ const Dashboard = () => {
   }, [navigate]);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUserContext(storedUser); // Update user context with stored data
-    }
-  }, []);
-
-  useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
     if (carouselElement) {
       const bootstrapCarousel = new window.bootstrap.Carousel(carouselElement, {
