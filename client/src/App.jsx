@@ -23,7 +23,7 @@ function App() {
           axios.get('/verifyToken', {
             headers: { Authorization: `Bearer ${token}` },
           }).then((res)=>{
-          console.log(res.data);
+          console.log("App :",res.data);
           if (res.data.valid) {
             console.log(res.data);
           } else {
@@ -36,19 +36,8 @@ function App() {
         }); 
       }
     }
-    async function userdb(){
-      axios.get("/db",{email : email})
-      .then((res)=>{
-        console.log(res.data.name);
-        setUserContext({
-          name : res.data.name
-        })
-      }).catch((er)=>{
-        console.log(er);
-      })
-    }
+   
     fetch();
-    userdb();
   }, [navigate]);
 
   return (
