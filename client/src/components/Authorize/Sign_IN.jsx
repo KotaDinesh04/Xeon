@@ -22,7 +22,6 @@ const Sign_IN = () => {
       .post("/login", { email, password })
       .then((res) => {
         console.log("login: ", res.data.accessToken);
-        navigate("/home"); // Redirect to home page
         
         // Update the user context with email and accessToken
         setUserContext ({
@@ -31,7 +30,8 @@ const Sign_IN = () => {
           accessToken: res.data.accessToken,
         });
         console.log(res.data.name);
-
+        
+        navigate("/home"); // Redirect to home page
       })
       .catch((err) => {
         console.log(err);
