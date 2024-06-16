@@ -23,7 +23,7 @@ const Dashboard = () => {
     if (storedUser) {
       setUserContext(storedUser);
     }
-  }, [setUserContext]);
+  }, []);
 
   useEffect(() => {
     const fetchTransaction = async () => {
