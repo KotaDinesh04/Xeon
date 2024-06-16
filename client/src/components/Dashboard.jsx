@@ -12,12 +12,18 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Dashboard = () => {
-  const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser
-  console.log("Dash board",name);
+  const { name, accessToken, setUserContext } = useUser();
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUserContext(storedUser);
+    }
+  }, [setUserContext]);
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -40,15 +46,10 @@ const Dashboard = () => {
       }
     };
 
-    fetchTransaction();
-  }, [navigate]);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUserContext(storedUser); // Update user context with stored data
+    if (accessToken) {
+      fetchTransaction();
     }
-  }, []);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
@@ -70,7 +71,7 @@ const Dashboard = () => {
         bootstrapCarousel.dispose();
       };
     }
-  }, [accounts]); // Only initialize carousel when accounts change
+  }, [accounts]);
 
   const handleCarouselControl = (direction) => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
@@ -83,7 +84,7 @@ const Dashboard = () => {
         carousel.next();
         setActiveIndex((activeIndex + 1) % accounts.length);
       }
-      carousel.cycle(); // Resume the autoplay
+      carousel.cycle();
     }
   };
 
