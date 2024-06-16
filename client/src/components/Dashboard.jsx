@@ -13,7 +13,6 @@ axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Dashboard = () => {
   const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser
-  console.log("Dashboard :",name);
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -41,7 +40,7 @@ const Dashboard = () => {
     };
 
     fetchTransaction();
-  }, [accessToken, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
