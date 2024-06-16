@@ -1,74 +1,49 @@
-import Dashboard from "./components/Dashboard";
-import Sidebar from "./components/Sidebar";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./globals.css";
+// App.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import { useUser } from '../src/components/UserContext';
+import { Outlet } from 'react-router-dom';
+import './globals.css';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [accessToken, setAccessToken] = useState(null);
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  axios.defaults.baseURL = "https://xeon-two.vercel.app";
+  axios.defaults.baseURL = 'http://localhost:3001';
 
   useEffect(() => {
     async function fetch() {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       if (token) {
-        try {
-          // Verify the token
-          const res = await axios.get("/verifyToken", {
+          axios.get('/verifyToken', {
             headers: { Authorization: `Bearer ${token}` },
-          });
-
+          }).then((res)=>{
+          console.log(res.data);
           if (res.data.valid) {
-            setLoggedIn({
-              firstName: res.data.user.email,
-              id: res.data.user.id,
-            });
-            console.log("The Data in app.js: " + res.data.user.email);
-
-            // Fetch user data using the verified user ID
-            const response = await axios.get("/db", {
-              params: { id: res.data.user.id },
-            });
-
-            setAccessToken(response.data.accessToken);
-            setUser(response.data.name);
-            console.log("User: ", response.data.accessToken);
+            console.log(res.data);
           } else {
-            navigate("/");
+            navigate('/');
           }
-        } catch (error) {
-          navigate("/");
-        } finally {
-          setLoading(false);
         }
-      } else {
-        navigate("/");
-        setLoading(false);
+       ). catch ((error)=> {
+        console.log(error);
+          navigate('/');
+        }); 
       }
     }
 
     fetch();
   }, [navigate]);
 
-  if (loading) return null;
-
   return (
-    <main className="flex h-screen w-full font-inter gap-2 sm:gap-0">
-      <Sidebar user={loggedIn} />
-      <Dashboard
-        type="greeting"
-        title="Welcome"
-        user={user}
-        accessToken={accessToken}
-        subtext="Access and manage your account and transactions efficiently."
-      />
-    </main>
+    <div className="flex h-screen w-full font-inter gap-2 sm:gap-0">
+      <Sidebar />
+      <div className="flex-grow pt-5">
+        <Outlet />
+      </div>
+    </div>
   );
 }
 

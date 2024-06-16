@@ -3,15 +3,15 @@ import axios from "axios";
 import { usePlaidLink } from "react-plaid-link";
 import PlaidAccessToken from "./PlaidAccessToken";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
-const PlaidConnectBank = ({ sendtoDataParent }) => {
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app"; 
+*/
+
+axios.defaults.baseURL = "http://localhost:3001";
+const PlaidConnectBank = () => {
   const [linkToken, setLinkToken] = useState("");
   const [publicToken, setPublicToken] = useState(null);
 
-  const handleChild = (accessToken) => {
-    sendtoDataParent(accessToken);
-  };
 
   useEffect(() => {
     const fetchLinkToken = async () => {
@@ -37,7 +37,7 @@ const PlaidConnectBank = ({ sendtoDataParent }) => {
   });
 
   return publicToken ? (
-    <PlaidAccessToken public_token={publicToken} sendtoParent={handleChild} />
+    <PlaidAccessToken public_token={publicToken} />
   ) : (
     <button
       className="w-full py-2 px-4 bg-purple-600 text-white font-bold rounded hover:bg-purple-700"

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import PlaidConnectBank from "../Plaid/PlaidConnectBank";
+import { useUser } from "../UserContext";
 
 const SignUp = ({ onSignupSuccess }) => {
   const [name, setName] = useState("");
@@ -13,12 +14,10 @@ const SignUp = ({ onSignupSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [accessToken, setAccessToken] = useState(null);
-  axios.defaults.baseURL = "https://xeon-two.vercel.app";
+ /*  axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
+ const {accessToken} = useUser();
 
-  const handleAccessToken = (access) => {
-    setAccessToken(access);
-  };
+  axios.defaults.baseURL = "http://localhost:3001";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,12 +42,12 @@ const SignUp = ({ onSignupSuccess }) => {
         };
         
         return (
-          <section className="min-h-screen flex items-center justify-center bg-white">
+          <section className="flex items-center justify-center bg-white">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold mb-2">Sign Up</h1>
           <p className="text-gray-600">Please enter your details.</p>
-      <PlaidConnectBank sendtoDataParent={handleAccessToken} />
+      <PlaidConnectBank />
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

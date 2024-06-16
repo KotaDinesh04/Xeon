@@ -1,8 +1,9 @@
+import { HiOutlineLogout } from "react-icons/hi";
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ user, type = 'desktop' }) => {
+const Footer = ({ name,email, type = 'desktop' }) => {
 const navigate = useNavigate();
   const handleLogOut = () => {
     
@@ -10,24 +11,21 @@ const navigate = useNavigate();
   };
 
   return (
-    <footer className="footer">
+    <footer className="footer mb-12">
       <div className={type === 'mobile' ? 'footer_name-mobile' : 'footer_name'}>
-        <p className="text-xl font-bold text-gray-700">
-          {user?.firstName[0]}
+        <p className="text-xl mt-3 font-bold text-gray-700">
+          {name[0]}
         </p>
       </div>
 
       <div className={type === 'mobile' ? 'footer_email-mobile' : 'footer_email'}>
-        <h1 className="text-14 truncate text-gray-700 font-semibold">
-          {user?.firstName}
+        <h1 className="text-14 truncate text-white font-semibold mt-1.5">
+          {name}
         </h1>
-        <p className="text-14 truncate font-normal text-gray-600">
-          {user?.id}
-        </p>
       </div>
 
-      <div className="footer_image" onClick={handleLogOut}>
-        <img src="icons/logout.svg" fill alt="jsm" />
+      <div className="footer_image " onClick={handleLogOut}>
+      <HiOutlineLogout size={34}/>
       </div>
     </footer>
   );

@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useUser } from "../UserContext";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
 
-const PlaidAccessToken = ({ public_token, sendtoParent }) => {
-  const [accessToken, setAccessToken] = useState();
-  const handlesendtoParent = () => {
-    sendtoParent(accessToken);
-  };
+axios.defaults.baseURL = "http://localhost:3001";
+
+
+const PlaidAccessToken = ({ public_token}) => {
+  const {setAccessToken} = useUser();
   useEffect(() => {
     async function fetch() {
       let accessToken = await axios.post("/token/exchange_public_token", {
@@ -19,7 +20,7 @@ const PlaidAccessToken = ({ public_token, sendtoParent }) => {
     fetch();
   }, []);
 
-  return handlesendtoParent();
+  return;
 };
 
 export default PlaidAccessToken;

@@ -1,71 +1,57 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
-
-import React from "react";
 import "./Sign_IN.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-//axios.defaults.baseURL = "";
-const Sign_IN = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [errorMessage, setErrorMessage] = useState(""); //state for error message
+import { useUser } from "../UserContext";
 
+axios.defaults.baseURL = "http://localhost:3001";
+
+const Sign_IN = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const { setUserContext } = useUser(); // Destructuring setUser from useUser hook
   const navigate = useNavigate();
-  const onSignUpClick = () => {
-    navigate("/signup");
-  };
 
   axios.defaults.withCredentials = true;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("/login", { email, password })
-
       .then((res) => {
-        console.log("login: " + res.data);
-        // Extracting token from res
-        const token = res.data.token;
-        if (token) {
-          localStorage.setItem("token", token); // Store token in local storage
-          navigate("/home"); // Redirect to home page
-        } else {
-          setErrorMessage(" " + res.data);
-        }
+        console.log("login: ", res.data.accessToken);
+        navigate("/home"); // Redirect to home page
+        
+        // Update the user context with email and accessToken
+        setUserContext ({
+          name : res.data.name,
+          email: email,
+          accessToken: res.data.accessToken,
+        });
+        console.log(res.data.name);
+
       })
       .catch((err) => {
         console.log(err);
-        setErrorMessage("An error occured: " + err);
+        setErrorMessage("An error occurred: " + err.response.data.message);
       });
   };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-10 lg:px-2">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-16 w-auto"
-          src="/Noe.png"
-          alt="Your Company"
-        />
+        <img className="mx-auto h-16 w-auto" src="/Noe.png" alt="Your Company" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6"
-          action="#"
-          method="POST"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
             </label>
             <div className="mt-2">
@@ -103,7 +89,7 @@ const Sign_IN = () => {
             </div>
           </div>
           {errorMessage && (
-            <div className="text-danger mt-4 ">{errorMessage}</div>
+            <div className="text-red-600 mt-4">{errorMessage}</div>
           )}
 
           <div>
@@ -111,13 +97,10 @@ const Sign_IN = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {/* <Link to="/Home" style={{color:"white"}}> Sign in </Link> */}
               Sign in
             </button>
           </div>
         </form>
-
-    
       </div>
     </div>
   );

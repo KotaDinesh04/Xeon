@@ -38,7 +38,7 @@ route.post("/create_link_token", async function (req, res) {
     client_name: "Plaid Test App",
     products: ["transactions"],
     language: "en",
-    redirect_uri: "https://xeon-bank-five.vercel.app/",
+    redirect_uri: "http://localhost:3000/",
     country_codes: ["US", "CA", "FR"],
   };
   try {

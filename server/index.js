@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(
   cors({
     //Link of the main origin from where it can be requested
-    origin: ['https://xeon-bank-five.vercel.app'],
+    origin: [ "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -108,10 +108,12 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await UserModel.findOne({ email: email });
-    if (user) {
+    if (user.accessToken) {
       if (user.password === password) {
+        const accessToken = user.accessToken;
+        const name = user.name;
         const token = createToken(user);
-        res.json({ Status: "Success", token, details: user });
+        res.json({token, accessToken,name});
       } else {
         res.json("The password is incorrect");
       }
@@ -170,3 +172,4 @@ const server = http.createServer(app);
 server.listen(PORT, () => {
   console.log("Server is Running " + PORT);
 });
+

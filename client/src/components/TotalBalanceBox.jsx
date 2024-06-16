@@ -3,7 +3,7 @@ import AnimatedCounter from "./AnimatedCounter";
 import DoughnutChart from "./DoughnutChart";
 import BankCard from "./BankCard";
 
-const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
+const TotalBalanceBox = ({ account, len, all, name, isActive }) => {
   /*  const cards = accounts.map((account) => {
     const amount = account.amount !== undefined ? parseFloat(account.amount) : 0;
     return {
@@ -16,8 +16,8 @@ const TotalBalanceBox = ({ account, len, all, user, isActive }) => {
  */
   return (
     <section className="total-balance">
-      <div className="ml-16 sm:mt-0 flex justify-center sm:block">
-        <BankCard account={account} userName={user} />
+      <div className="ml-20 sm:mt-0 flex justify-center">
+        <BankCard account={account} userName={name} />
       </div>
       <div className="total-balance-chart ml-10 hidden sm:flex">
         <DoughnutChart account={all} />

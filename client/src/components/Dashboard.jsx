@@ -1,138 +1,145 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import TotalBalanceBox from './TotalBalanceBox';
+import RecentTransactions from './RecentTransactions';
+import HeaderBox from './HeaderBox';
+import { useUser } from './UserContext';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import TotalBalanceBox from "./TotalBalanceBox";
-import RecentTransactions from "./RecentTransactions";
-import HeaderBox from "./HeaderBox";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import RightSidebar from "./RightSidebar";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
-
-const Dashboard = ({ type, title, subtext, user, accessToken }) => {
+const Dashboard = () => {
+  const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser
+  console.log("Dashboard :",name);
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
-  const [data, setData] = useState({});
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get("/transdb", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        console.log("Fetched Data:", res.data);
-        setData(res.data);
-        setAccounts(res.data.accounts);
-        setTransactionAdded(res.data.added);
+        if (accessToken) {
+          const res = await axios.get('/transdb', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          console.log('Fetched Data:', res.data);
+          setAccounts(res.data.accounts);
+          setTransactionAdded(res.data.added);
+        } else {
+          navigate('/');
+        }
       } catch (error) {
-        console.error("Error fetching transaction:", error);
+        console.error('Error fetching transaction:', error);
+        navigate('/');
       }
     };
 
     fetchTransaction();
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
-    console.log("Accounts:", accounts);
-  }, [accounts]);
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUserContext(storedUser); // Update user context with stored data
+    }
+  }, [setUserContext]);
 
   useEffect(() => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
-    const bootstrapCarousel = new window.bootstrap.Carousel(carouselElement, {
-      interval: 4000,
-      ride: 'carousel'
-    });
+    if (carouselElement) {
+      const bootstrapCarousel = new window.bootstrap.Carousel(carouselElement, {
+        interval: 4000,
+        ride: 'carousel',
+      });
 
-    const handleSlide = (event) => {
-      const newIndex = event.to;
-      setActiveIndex(newIndex);
-    };
+      const handleSlide = (event) => {
+        const newIndex = event.to;
+        setActiveIndex(newIndex);
+      };
 
-    carouselElement.addEventListener('slid.bs.carousel', handleSlide);
+      carouselElement.addEventListener('slid.bs.carousel', handleSlide);
 
-    return () => {
-      carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
-      bootstrapCarousel.dispose();
-    };
-  }, []);
+      return () => {
+        carouselElement.removeEventListener('slid.bs.carousel', handleSlide);
+        bootstrapCarousel.dispose();
+      };
+    }
+  }, [accounts]); // Only initialize carousel when accounts change
 
   const handleCarouselControl = (direction) => {
     const carouselElement = document.querySelector('#carouselExampleAutoplaying');
-    if (direction === 'prev') {
-      carouselElement.carousel('prev');
-      setActiveIndex((activeIndex - 1 + accounts.length) % accounts.length);
-    } else if (direction === 'next') {
-      carouselElement.carousel('next');
-      setActiveIndex((activeIndex + 1) % accounts.length);
+    if (carouselElement) {
+      const carousel = window.bootstrap.Carousel.getInstance(carouselElement);
+      if (direction === 'prev') {
+        carousel.prev();
+        setActiveIndex((activeIndex - 1 + accounts.length) % accounts.length);
+      } else if (direction === 'next') {
+        carousel.next();
+        setActiveIndex((activeIndex + 1) % accounts.length);
+      }
+      carousel.cycle(); // Resume the autoplay
     }
-    carouselElement.carousel('cycle'); // Resume the autoplay
   };
 
   const len = accounts.length;
+
   return (
     <section className="home">
       <div className="home-content">
         <header className="home-header">
-          <header className="header-box">
-            <HeaderBox
-              title={title}
-              type={type}
-              subtext={subtext}
-              user={user}
-            />
+          <HeaderBox
+            title={'Welcome'}
+            type={'greeting'}
+            subtext={'Banking Management'}
+            name={name}
+          />
 
-            <div
-              id="carouselExampleAutoplaying"
-              className="carousel slide hidden sm:flex"
-              data-bs-ride="carousel"
-            >
-              <div className="carousel-inner">
-                {accounts.map((account, index) => (
-                  <div
-                    className={`carousel-item ${index === activeIndex ? "active" : ""}`}
-                    key={index}
-                  >
-                    <TotalBalanceBox
-                      len={len}
-                      account={account}
-                      all={accounts}
-                      user={user}
-                      isActive={index === activeIndex}
-                    />
-                  </div>
-                ))}
-              </div>
-              <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="prev"
-                onClick={() => handleCarouselControl('prev')}
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button
-                className="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="next"
-                onClick={() => handleCarouselControl('next')}
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Next</span>
-              </button>
+          <div
+            id="carouselExampleAutoplaying"
+            className="carousel slide hidden sm:flex"
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-inner">
+              {accounts.map((account, index) => (
+                <div
+                  className={`carousel-item ${index === activeIndex ? 'active' : ''}`}
+                  key={index}
+                >
+                  <TotalBalanceBox
+                    len={len}
+                    account={account}
+                    all={accounts}
+                    name={name}
+                    isActive={index === activeIndex}
+                  />
+                </div>
+              ))}
             </div>
-          </header>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleAutoplaying"
+              data-bs-slide="prev"
+              onClick={() => handleCarouselControl('prev')}
+            >
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleAutoplaying"
+              data-bs-slide="next"
+              onClick={() => handleCarouselControl('next')}
+            >
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
         </header>
         <RecentTransactions transactions={transactionAdded} />
       </div>

@@ -339,7 +339,7 @@
 
   /* Footer */
   .footer {
-    @apply flex cursor-pointer items-center justify-between gap-2 py-6;
+    @apply flex cursor-pointer items-center justify-between absolute bottom-0 gap-6 ml-4 p-2  text-white bg-blue-600 rounded-lg;
   }
 
   .footer_name {
@@ -359,7 +359,7 @@
   }
 
   .footer_image {
-    @apply relative size-5 max-xl:w-full max-xl:flex max-xl:justify-center max-xl:items-center;
+    @apply relative max-xl:w-full max-xl:flex max-xl:justify-center max-xl:items-center ;
   }
 
   .footer_image-mobile {
@@ -368,7 +368,7 @@
 
   /* Sidebar */
   .sidebar {
-    @apply sticky left-0 top-0 flex h-screen w-fit flex-col  justify-between border-r border-gray-200 bg-white pt-8 text-white sm:p-4 xl:p-6 2xl:w-[355px];
+    @apply sticky left-0 top-0 flex h-screen w-fit flex-col justify-between border-r border-gray-200 bg-white pt-8 text-white sm:p-4 xl:p-6 2xl:w-[355px];
   }
 
   .sidebar-logo {
@@ -376,12 +376,9 @@
   }
 
   .sidebar-link {
-    @apply flex gap-3 items-center py-1 md:p-3 2xl:p-4 rounded-lg justify-center xl:justify-start;
+    @apply flex gap-3 items-center py-1 md:p-3 2xl:p-2 rounded-lg justify-center xl:justify-start;
   }
 
-  .sidebar-label {
-    @apply text-14 w-36 font-semibold text-black-2 max-xl:hidden;
-  }
 }
 
 /* @media (min-width:1280px){

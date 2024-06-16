@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
+import { useUser } from "./UserContext";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
+/* axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
+axios.defaults.baseURL = "http://localhost:3001";
 
-const TransactionHistory = ({ accessToken, user }) => {
+const TransactionHistory = () => {
+  const {accessToken} = useUser();
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
   const [data, setData] = useState({});

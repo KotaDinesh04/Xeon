@@ -3,10 +3,14 @@ import { useState ,useEffect} from "react";
 import axios from "axios";
 import BankCard from "./BankCard";
 import HeaderBox from "./HeaderBox";
+import { useUser } from './UserContext';
+/* 
+axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
+axios.defaults.baseURL = "http://localhost:3001";
 
-axios.defaults.baseURL = "https://xeon-two.vercel.app";
-
-const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
+const MyBankAccounts = () => {
+  const {name ,accessToken} = useUser();
+  console.log("MyBank :",name);
   const [accounts , setAccounts] = useState([]);
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -29,7 +33,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
   return (
     <div className="flex">
       <div className="my-banks">
-        <HeaderBox title={title} user={user} subtext={subtext} type={type} />
+        <HeaderBox title={"Welcome"} name={name} subtext={"Show the all backaccounts"} type={"greeting"} />
 
         <div className="space-y-4">
           <h2 className="header-2">
@@ -41,7 +45,7 @@ const MyBankAccounts = ({ title, user, type, subtext , accessToken}) => {
             <BankCard 
               key={index}
               account={account}
-              userName={user}
+              userName={name}
             />
             
           ))}
