@@ -4,9 +4,9 @@ import axios from "axios";
 import BankCard from "./BankCard";
 import HeaderBox from "./HeaderBox";
 import { useUser } from './UserContext';
-/* 
-axios.defaults.baseURL = "https://xeon-two.vercel.app"; */
-axios.defaults.baseURL = "http://localhost:3001";
+
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
+/* axios.defaults.baseURL = "http://localhost:3001"; */
 
 const MyBankAccounts = () => {
   const {name ,accessToken} = useUser();

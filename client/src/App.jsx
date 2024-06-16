@@ -11,7 +11,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  axios.defaults.baseURL = 'http://localhost:3001';
+/*   axios.defaults.baseURL = 'http://localhost:3001'; */
+
+axios.defaults.baseURL = "https://xeon-two.vercel.app";
 
   useEffect(() => {
     async function fetch() {
