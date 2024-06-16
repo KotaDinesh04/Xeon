@@ -10,7 +10,7 @@ import './globals.css';
 function App() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const {email, setUserContext} = useUser();
+  const {email} = useUser();
   console.log(email);
   axios.defaults.baseURL = import.meta.env.VITE_server;
 

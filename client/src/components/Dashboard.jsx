@@ -12,7 +12,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 axios.defaults.baseURL = import.meta.env.VITE_server;
 
 const Dashboard = () => {
-  const { name, accessToken, setUserContext } = useUser(); // Destructure setUser from useUser
+  const { name, accessToken} = useUser(); // Destructure setUser from useUser
   console.log("Dash board",name);
   const [accounts, setAccounts] = useState([]);
   const [transactionAdded, setTransactionAdded] = useState([]);
