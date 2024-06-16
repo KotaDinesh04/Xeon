@@ -2,9 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import PlaidConnectBank from "../Plaid/PlaidConnectBank";
 import { useUser } from "../UserContext";
-import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const SignUp = ({ onSignupSuccess }) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -19,11 +18,10 @@ const SignUp = () => {
  const {accessToken} = useUser();
 
 /*   axios.defaults.baseURL = "http://localhost:3001"; */
-const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(accessToken){
+
     const syncRequest = axios.post("/transactions/sync", {
       accessToken: accessToken,
     });
@@ -35,14 +33,13 @@ const navigate = useNavigate();
         const [syncResponse, signupResponse] = res; 
         console.log(syncResponse.data);
         console.log(signupResponse.data);
-        navigate('/') // Call the success callback
+        onSignupSuccess(); // Call the success callback
       })
       .catch((err) => {
         console.error("There was an error!!", err);
         setErrorMessage("An error occurred: " + err.message);
         });
         };
-      }
         
         return (
           <section className="flex items-center justify-center bg-white">
