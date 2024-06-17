@@ -43,7 +43,7 @@ const Authorize = () => {
       </div>
       {/* Hide image on small devices */}
       <div className="hidden md:block  items-center justify-center bg-gray-100">
-        <img src="/pic.png" className="w-full h-full object-cover" alt="Auth" />
+        <img src="/back.png" className="w-full h-full object-cover" alt="Auth" />
       </div>
     </section>
   );
